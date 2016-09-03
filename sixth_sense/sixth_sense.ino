@@ -42,6 +42,15 @@ void loop()
   analogWrite(pin4, 0);
   analogWrite(pin5, 0);
   analogWrite(pin6, 0);
+  
+  delay(delayTime);
+
+  analogWrite(pin1, outValue1);
+  analogWrite(pin2, outValue2);
+  analogWrite(pin3, outValue3);
+  analogWrite(pin4, outValue4);
+  analogWrite(pin5, outValue5);
+  analogWrite(pin6, outValue6);
 }
 
 void serialEvent() 
@@ -53,6 +62,30 @@ void serialEvent()
     
     byte calcPin = calculatePin(inValue);
     byte calcValue = calculateOutValue(inValue);
+
+    switch(calcPin)
+    {
+      case 0:
+        outValue1 = calcValue;
+        break;
+      case 1:
+        outValue2 = calcValue;
+        break;
+      case 2:
+        outValue3 = calcValue;
+        break;
+      case 3:
+        outValue4 = calcValue;
+        break;
+      case 4:
+        outValue5 = calcValue;
+        break;
+      case 5:
+        outValue6 = calcValue;
+        break;
+      default:
+        break;
+    }
   }
 }
 
