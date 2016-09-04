@@ -60,9 +60,10 @@ void serialEvent()
     Serial.setTimeout(timeout);
     inValue = (byte)Serial.parseInt();
     
-    byte calcPin = calculatePin(inValue);
-    byte calcValue = calculateOutValue(inValue);
-
+    byte calcValue = inValue & 0b00011111;
+    byte calcPin = inValue >> 5;
+    
+    //set value to correct output based on pin number
     switch(calcPin)
     {
       case 0:
@@ -89,27 +90,5 @@ void serialEvent()
   }
 }
 
-byte calculateOutValue(byte input)
-{
-  /*
-   * get five least-significant bits of incoming byte
-   * it will become value for output on Arduino
-   */
-  bitClear(input, 7);
-  bitClear(input, 6);
-  bitClear(input, 5);
 
-  return input;
-}
-
-int calculatePin(byte input)
-{
-  /*
-   * get three most-significant bits of incoming byte
-   * it will become pin number for sending output on Arduino
-   */  
-  int pinNumber = input >> 5;
-  
-  return pinNumber;
-}
 
